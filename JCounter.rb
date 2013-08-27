@@ -3,6 +3,7 @@
 
 require 'net/http'
 require 'json'
+require 'time'
 require_relative 'Logging'
 
 class JCounter
@@ -13,7 +14,10 @@ class JCounter
 		for i in 1..1
 			uri = URI("http://api.juick.com/messages?page=#{i}")
 			res = Net::HTTP.get_response(uri)
-			puts JSON.parse(res.body)[0]
+			JSON.parse(res.body).each {|msg|
+				dcTime = Time.parse(msg['timestamp']) + 4 * 60 * 60 # Default City Time
+				puts "#{dcTime.wday}"
+			}
 		end
 	end
 
