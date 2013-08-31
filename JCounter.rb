@@ -24,6 +24,7 @@ class JCounter
 			sub.each { |key, value|
 				res.body.sub!(key, value)
 			}
+			res.body.gsub!(/\s+/, " ")
 			JSON.parse(res.body).each {|msg|
 				dcTime = Time.parse(msg['timestamp']) + 4 * 60 * 60 # Default City Time
 				wdays[dcTime.wday - 1] += 1
